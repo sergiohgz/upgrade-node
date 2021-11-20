@@ -1,0 +1,15 @@
+{
+  "name": "node_scripts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "example_1.js",
+  "scripts": {
+    "ejecutar1": "node ./example_1.js",
+    "ejecutar2": "node ./example_2.js",
+    "ejecutar": "node example_1.js && node example_2.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
