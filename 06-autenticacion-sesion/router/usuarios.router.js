@@ -1,0 +1,52 @@
+const express = require('express');
+const passport = require('passport');
+
+const router = express.Router();
+
+// POST para registro
+router.post('/register', (req, res, next) => {
+    passport.authenticate('register', (error, usuario) => {
+        if (error) {
+            return next(error);
+        }
+        req.logIn(usuario, (error) => {
+            if (error) {
+                return next(error);
+            }
+            return res.status(201).json(usuario);
+        });
+    })(req);
+});
+
+// POST para login
+router.post('/login', (req, res, next) => {
+    passport.authenticate('login', (error, usuario) => {
+        if (error) {
+            return next(error);
+        }
+        req.logIn(usuario, (error) => {
+            if (error) {
+                return next(error);
+            }
+            return res.status(200).json(usuario);
+        });
+    })(req);
+});
+
+// POST para logout
+router.post('/logout', (req, res, next) => {
+    if (req.user) {
+        // Cerramos sesion de la petición
+        req.logout();
+
+        // Destruimos la sesión de la petición
+        req.session.destroy(() => {
+            res.clearCookie('connect.sid');
+            return res.status(200).json('Cerrada la sesión del usuario');
+        });
+    } else {
+        res.sendStatus(304);
+    }
+});
+
+module.exports = router;
