@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node main.js",
     "dev": "nodemon",
-    "init-db": "node seeds/usuarios.seed.js",
+    "init-db": "node seeds/todasSemillas.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
