@@ -1,6 +1,9 @@
 const express = require('express');
 const passport = require('passport');
 
+const { isAuthenticated } = require('../middlewares/auth.middleware');
+const { logger } = require('../middlewares/logger.middleware');
+
 const router = express.Router();
 
 // POST para registro
@@ -19,7 +22,7 @@ router.post('/register', (req, res, next) => {
 });
 
 // POST para login
-router.post('/login', (req, res, next) => {
+router.post('/login', [logger], (req, res, next) => {
     passport.authenticate('login', (error, usuario) => {
         if (error) {
             return next(error);
@@ -34,7 +37,7 @@ router.post('/login', (req, res, next) => {
 });
 
 // POST para logout
-router.post('/logout', (req, res, next) => {
+router.post('/logout'/*, [isAuthenticated]*/, (req, res, next) => {
     if (req.user) {
         // Cerramos sesion de la petición
         req.logout();

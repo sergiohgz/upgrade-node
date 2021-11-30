@@ -5,6 +5,7 @@ const MongoStore = require('connect-mongo')
 
 const { DB_URL } = require('./db/db');
 require('./authentication/passport');
+const { isAuthenticated } = require('./middlewares/auth.middleware');
 const usuariosRouter = require('./router/usuarios.router');
 const empleadosRouter = require('./router/empleados.router');
 const empresasRouter = require('./router/empresas.router');
@@ -36,10 +37,10 @@ server.use(passport.session());
 server.use('/usuarios', usuariosRouter);
 
 // Middleware de enrutado para /empleados
-server.use('/empleados', empleadosRouter);
+server.use('/empleados', [isAuthenticated], empleadosRouter);
 
 // Middleware de enrutado para /empresas
-server.use('/empresas', empresasRouter);
+server.use('/empresas', [isAuthenticated], empresasRouter);
 
 // Middleware de enrutado para rutas no existentes
 server.use('*', (req, res, next) => {
